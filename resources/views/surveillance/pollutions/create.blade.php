@@ -41,7 +41,9 @@
         </div>
         <div class="mb-3">
             <label for="image_satellite" class="form-label">Image satellite :</label>
-            <input type="file" id="image_satellite" name="image_satellite" class="form-control forma" accept="image/*">
+            <!-- <input type="file" id="image_satellite" name="image_satellite" class="form-control forma" accept="image/*"> -->
+            <input type="file" name="images[]" multiple accept="image/*" class="form-control forma" >
+            <!-- <input type="file" id="image_satellite" name="image_satellite"  multiple accept="image/*" class="form-control forma" > -->
         </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
         <a href="{{ route('pollutions.index') }}" class="btn btn-secondary">Annuler</a>

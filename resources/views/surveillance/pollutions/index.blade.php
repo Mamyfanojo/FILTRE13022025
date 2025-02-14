@@ -39,12 +39,15 @@
                 <td>{{ $pollution->coordonnees }}</td>
                 <td>{{ $pollution->type_pollution }}</td>
                 <td>
-                    @if ($pollution->image_satellite)
-                        <img src="{{ asset('storage/' . $pollution->image_satellite) }}" width="100" class="rounded">
+                    @if ($pollution->images->isNotEmpty())
+                        @foreach ($pollution->images as $image)
+                            <img src="{{ asset('storage/' . $image->image_path) }}" width="100" class="rounded">
+                        @endforeach
                     @else
                         <span class="text-muted">Aucune image</span>
                     @endif
                 </td>
+
                 <td>
                     <div class="d-flex gap-2">
                         <a href="{{ route('pollutions.exportPDF', $pollution->id) }}" class="btn btn-secondary btn-sm">Exporter PDF</a>

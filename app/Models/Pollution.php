@@ -16,4 +16,9 @@ class Pollution extends Model
         'type_pollution',
         'image_satellite'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(PollutionImage::class);
+    }
 }
