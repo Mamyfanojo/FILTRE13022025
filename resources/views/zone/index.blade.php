@@ -1,3 +1,4 @@
+
 @extends('layout')
 
 @section('content')
@@ -5,18 +6,24 @@
     <div class="container mt-5">
         <h2 class="mb-4 text-center">📜 Liste des données</h2>
 
-        <div class="d-flex justify-content-between flex-wrap mb-3">
-            <a href="{{ route('articles.export') }}" class="btn btn-success">
-                <i class="fas fa-file-csv"></i> Exporter tous les articles
-            </a>
-            <a href="{{ route('list.mada') }}" class="btn btn-primary">
-                <i class="fas fa-file-csv"></i>Liste MADA
-            </a>
+        
+
+        <!-- Boutons pour accéder aux zones -->
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+            @for ($i = 1; $i <= 9; $i++)
+                <a href="{{ route('zone.show', ['id' => $i]) }}" class="btn btn-info">
+                    Zone {{ $i }}
+                </a>
+            @endfor
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
         <!-- Formulaire d'import CSV -->
         <div class="card p-3 mb-4 shadow-sm">
-            <form action="{{ route('articles.import') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('zone.import', ['id' => $id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="input-group">
                     <input type="file" name="csv_file" class="form-control" required>
@@ -24,31 +31,6 @@
                 </div>
             </form>
         </div>
-
-
-        <!-- Barre de recherche -->
-        <form action="{{ route('articles.filter') }}" method="GET" class="d-flex mb-3">
-        <select name="filter" class="form-control me-2">
-                <option value="">Sélectionner un filtre</option>
-                <option value="destinationmada" {{ request('filter') == 'destinationmada' ? 'selected' : '' }}>Destination mada internationnal</option>
-                <option value="national" {{ request('filter') == 'national' ? 'selected' : '' }}>National</option>
-                <option value="international" {{ request('filter') == 'international' ? 'selected' : '' }}>International</option>
-            </select>
-            <button type="submit" class="btn btn-info"><i class="fas fa-filter"></i> Filtrer</button>
-        </form>
-
-
-
-        @if(request()->has('filter'))
-            <a href="{{ route('articles.export.filtered', ['filter' => request('filter')]) }}" class="btn btn-warning mb-3">
-                <i class="fas fa-file-export"></i> Exporter les résultats filtrés
-            </a>
-        @endif
-
-
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
 
         <!-- TABLE RESPONSIVE -->
         <div class="table-responsive">
@@ -70,7 +52,7 @@
                         <th>Longitude</th>
                         <th>Age</th>
                         <th>Time Of Fix</th>
-                        <th style="width: 120px;">Actions</th> <!-- Agrandissement de la colonne -->
+                        <th style="width: 120px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,21 +95,18 @@
             {{ $articles->links() }}
         </div>
 
-
-    
-
     <style>
         table td {
-            word-break: break-word; /* Empêche les débordements */
-            max-width: 150px; /* Limite la largeur des colonnes */
+            word-break: break-word; 
+            max-width: 150px; 
         }
-
         td:last-child {
-            width: 120px; /* Ajustement pour la colonne Actions */
+            width: 120px;
         }
         .pagination {
-            flex-wrap: wrap; /* Empêche le débordement */
-            justify-content: center; /* Centre la pagination */
+            flex-wrap: wrap;
+            justify-content: center;
         }
     </style>
+
 @endsection

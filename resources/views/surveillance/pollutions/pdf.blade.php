@@ -86,10 +86,9 @@
                 <span class="section-title">Insertion Images Satellites :</span>
             </div>
             <div class="image-container">
-                <!-- <img src="{{ public_path('storage/' . $pollution->image_satellite) }}"> -->
                 @if ($pollution->images->isNotEmpty())
                     @foreach ($pollution->images as $image)
-                    <img src="{{ base_path('public/storage/' . $image->image_path) }}" width="500" class="rounded mb-2">
+                    <img src="{{ base_path('public/storage/' . $image->image_path) }}" width="500" class="rounded ">
                     <br><br>
 
                     @endforeach
